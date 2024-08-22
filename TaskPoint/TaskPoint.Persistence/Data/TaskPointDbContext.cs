@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskPoint.Domain.Model;
-using TaskPoint.Domain.Tools.Enums;
 using Task = TaskPoint.Domain.Model.Task;
 
 namespace TaskPoint.Persistence.Data;
