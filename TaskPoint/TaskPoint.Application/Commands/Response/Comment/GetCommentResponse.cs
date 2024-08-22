@@ -1,6 +1,6 @@
 ﻿namespace TaskPoint.Application.Commands.Response.Comment;
 
-public class GetCommentByIdResponse
+public class GetCommentResponse
 {
     public Guid CommentId { get; set; }
     public string Content { get; set; }

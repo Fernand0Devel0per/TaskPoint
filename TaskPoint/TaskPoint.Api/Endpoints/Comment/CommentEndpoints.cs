@@ -35,7 +35,7 @@ public static class CommentEndpoints
         app.MapGet("/api/comments/{commentId:guid}", GetCommentById)
             .WithName("GetCommentById")
             .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
-            .Produces<GetCommentByIdResponse>(StatusCodes.Status200OK)
+            .Produces<GetCommentResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status500InternalServerError);
     }

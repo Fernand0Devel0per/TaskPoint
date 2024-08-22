@@ -35,7 +35,7 @@ public static class ProjectEndpoints
         app.MapGet("/api/projects/{projectId:guid}", GetProjectById)
             .WithName("GetProjectById")
             .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
-            .Produces<GetProjectByIdResponse>(StatusCodes.Status200OK)
+            .Produces<GetProjectResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status500InternalServerError);
     }
