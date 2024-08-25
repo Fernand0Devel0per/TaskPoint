@@ -21,7 +21,6 @@ public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, bool>
 
     public async Task<bool> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
-        //TO DO
         throw new NotImplementedException();
     }
 }

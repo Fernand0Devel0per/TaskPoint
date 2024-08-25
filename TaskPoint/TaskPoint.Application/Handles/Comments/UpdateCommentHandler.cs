@@ -16,7 +16,6 @@ public class UpdateCommentHandler : IRequestHandler<UpdateCommentCommand, bool>
 
     public async Task<bool> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
     {
-        // TO DO
         throw new NotImplementedException();
     }
 }

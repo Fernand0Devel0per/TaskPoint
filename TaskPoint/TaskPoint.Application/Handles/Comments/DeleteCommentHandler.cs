@@ -16,7 +16,6 @@ public class DeleteCommentHandler : IRequestHandler<DeleteCommentCommand, bool>
 
     public async Task<bool> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
     {
-        //TO DO
         throw new NotImplementedException();
     }
 }

@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskPoint.Application.Commands.Request.Project;
 using TaskPoint.Application.Commands.Response.Project;
 using TaskPoint.Domain.Model;
@@ -22,7 +17,6 @@ public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, GetPro
 
     public async Task<GetProjectResponse> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
-        //TO DO
         throw new NotImplementedException();
     }
 }

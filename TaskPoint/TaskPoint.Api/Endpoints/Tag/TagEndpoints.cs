@@ -35,7 +35,7 @@ public static class TagEndpoints
         app.MapGet("/api/tags/{tagId:guid}", GetTagById)
             .WithName("GetTagById")
             .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
-            .Produces<GetTagByIdResponse>(StatusCodes.Status200OK)
+            .Produces<GetTagResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status500InternalServerError);
     }

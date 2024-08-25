@@ -17,7 +17,6 @@ public class GetAllCommentsHandler : IRequestHandler<GetAllCommentsQuery ,IEnume
 
     public async Task<IEnumerable<GetCommentResponse>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
     {
-       //TODO
        throw new NotImplementedException();
     }
 }

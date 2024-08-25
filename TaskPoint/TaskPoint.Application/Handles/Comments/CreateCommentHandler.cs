@@ -17,7 +17,6 @@ public class CreateCommentHandler : IRequestHandler<CreateCommentCommand, Create
 
     public async Task<CreateCommentResponse> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
-       //TO DO
        throw new NotImplementedException();
     }
 

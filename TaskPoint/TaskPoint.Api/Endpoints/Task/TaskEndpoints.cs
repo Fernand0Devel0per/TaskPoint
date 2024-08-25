@@ -35,7 +35,7 @@ namespace TaskPoint.Api.Endpoints.Task
             app.MapGet("/api/tasks/{taskId:guid}", GetTaskById)
                 .WithName("GetTaskById")
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
-                .Produces<GetTaskByIdResponse>(StatusCodes.Status200OK)
+                .Produces<GetTasResponse>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status204NoContent)
                 .Produces(StatusCodes.Status500InternalServerError);
         }

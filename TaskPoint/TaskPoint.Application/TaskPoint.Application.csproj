@@ -12,15 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaskPoint.Domain\TaskPoint.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Handles\Comment\" />
-    <Folder Include="Handles\Project\" />
     <Folder Include="Handles\User\" />
     <Folder Include="Handles\Tag\" />
     <Folder Include="Handles\Task\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskPoint.Persistence\TaskPoint.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,7 +16,6 @@ public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, bool>
 
     public async Task<bool> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
-        //TO DO
         throw new NotImplementedException();
     }
 }

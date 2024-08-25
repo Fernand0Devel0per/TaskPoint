@@ -17,7 +17,6 @@ public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, Create
 
     public async Task<CreateProjectResponse> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-       //TO DO
         throw new NotImplementedException();
     }
 }

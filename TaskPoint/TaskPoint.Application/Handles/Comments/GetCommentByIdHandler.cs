@@ -17,7 +17,6 @@ public class GetCommentByIdHandler : IRequestHandler<GetCommentByIdQuery, GetCom
 
     public async Task<GetCommentResponse> Handle(GetCommentByIdQuery request, CancellationToken cancellationToken)
     {
-        // TO Do
         throw new NotImplementedException();
     }
 }

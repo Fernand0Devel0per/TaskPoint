@@ -17,7 +17,6 @@ public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, IEnume
 
     public async Task<IEnumerable<GetProjectResponse>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
     {
-        //TO DO
         throw new NotImplementedException();
     }
 }
