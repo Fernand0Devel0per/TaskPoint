@@ -3,7 +3,10 @@ CREATE TABLE Users (
     Username NVARCHAR(50) NOT NULL,
     Email NVARCHAR(100) NOT NULL,
     PasswordHash NVARCHAR(255) NOT NULL,
-    CreatedDate DATETIME NOT NULL
+    CreatedDate DATETIME NOT NULL,
+    UpdatedDate DATETIME NOT NULL,
+    Role INT NOT NULL,
+    FOREIGN KEY (Role) REFERENCES UserRoles(RoleId)
 );
 
 CREATE TABLE Projects (
@@ -13,6 +16,7 @@ CREATE TABLE Projects (
     Description NVARCHAR(255),
     StartDate DATETIME,
     EndDate DATETIME,
+    UpdateDate DATETIME NOT NULL,
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 );
 
@@ -25,13 +29,14 @@ CREATE TABLE Tasks (
     Priority INT NOT NULL,
     DueDate DATETIME,
     CreatedDate DATETIME NOT NULL,
+    UpdateDate DATETIME NOT NULL,
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 );
 
 CREATE TABLE Tags (
     TagId UNIQUEIDENTIFIER PRIMARY KEY,
     Name NVARCHAR(50) NOT NULL,
-    Color NVARCHAR(7) -- Assuming color is stored as a HEX code
+    Color NVARCHAR(7)
 );
 
 CREATE TABLE TaskTags (
@@ -48,6 +53,7 @@ CREATE TABLE Comments (
     UserId UNIQUEIDENTIFIER NOT NULL,
     Content NVARCHAR(255) NOT NULL,
     CreatedDate DATETIME NOT NULL,
+    UpdateDate DATETIME NOT NULL,
     FOREIGN KEY (TaskId) REFERENCES Tasks(TaskId),
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 );
@@ -63,6 +69,12 @@ CREATE TABLE TaskPriority (
     Name NVARCHAR(50) NOT NULL
 );
 
+CREATE TABLE UserRoles (
+    RoleId INT PRIMARY KEY,
+    Name NVARCHAR(50) NOT NULL
+);
+
 -- Insert enumeration values
 INSERT INTO TaskStatus (StatusId, Name) VALUES (0, 'Pending'), (1, 'InProgress'), (2, 'Completed');
 INSERT INTO TaskPriority (PriorityId, Name) VALUES (0, 'Low'), (1, 'Medium'), (2, 'High');
+INSERT INTO UserRoles (RoleId, Name) VALUES (0, 'Admin'), (1, 'UserDefault'), (2, 'Guest');

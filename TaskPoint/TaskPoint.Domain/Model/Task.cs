@@ -13,6 +13,7 @@ namespace TaskPoint.Domain.Model
         public TaskPriority Priority { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDated { get; set; }
 
         public User User { get; set; }
         public ICollection<Comment> Comments { get; set; }

@@ -8,6 +8,5 @@ public class GetTaskResponse
     public string Status { get; set; }
     public string Priority { get; set; }
     public DateTime DueDate { get; set; }
-    public DateTime CreatedDate { get; set; }
     public Guid UserId { get; set; }
 }

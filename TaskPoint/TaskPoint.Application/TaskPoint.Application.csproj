@@ -12,12 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Handles\User\" />
-    <Folder Include="Handles\Tag\" />
-    <Folder Include="Handles\Task\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TaskPoint.Persistence\TaskPoint.Persistence.csproj" />
   </ItemGroup>
 

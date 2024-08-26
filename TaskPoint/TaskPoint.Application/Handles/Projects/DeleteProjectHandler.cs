@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskPoint.Application.Commands.Request.Project;
 using TaskPoint.Domain.Model;
 using TaskPoint.Persistence.Interface;
