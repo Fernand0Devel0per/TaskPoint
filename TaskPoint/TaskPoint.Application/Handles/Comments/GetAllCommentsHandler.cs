@@ -6,7 +6,7 @@ using TaskPoint.Persistence.Interface;
 
 namespace TaskPoint.Application.Handles.Comments;
 
-public class GetAllCommentsHandler : IRequestHandler<GetAllCommentsQuery ,IEnumerable<GetCommentResponse>>
+public class GetAllCommentsHandler : IRequestHandler<GetAllCommentsQuery , GetAllCommentsResponse>
 {
     private readonly ICommentRepository<Comment> _repository;
 
@@ -15,7 +15,7 @@ public class GetAllCommentsHandler : IRequestHandler<GetAllCommentsQuery ,IEnume
         _repository = repository;
     }
 
-    public async Task<IEnumerable<GetCommentResponse>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
+    public async Task<GetAllCommentsResponse> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
     {
        throw new NotImplementedException();
     }

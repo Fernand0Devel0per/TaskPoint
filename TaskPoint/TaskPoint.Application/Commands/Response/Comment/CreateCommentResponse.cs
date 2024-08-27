@@ -1,6 +1,6 @@
 ﻿namespace TaskPoint.Application.Commands.Response.Comment;
 
-public class CreateCommentResponse
+public class CreateCommentResponse : ResponseBase
 {
     public Guid CommentId { get; set; }
 

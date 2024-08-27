@@ -7,7 +7,7 @@ using TaskPoint.Persistence.Interface;
 using Task = TaskPoint.Domain.Model.Task;
 namespace TaskPoint.Application.Handles.Tasks;
 
-public class GetAllTasksHandler : IRequestHandler<GetAllTasksQuery, IEnumerable<GetTaskResponse>>
+public class GetAllTasksHandler : IRequestHandler<GetAllTasksQuery, GetAllTasksResponse>>
 {
     private readonly ITaskRepository<Task> _repository;
 
@@ -16,7 +16,7 @@ public class GetAllTasksHandler : IRequestHandler<GetAllTasksQuery, IEnumerable<
         _repository = repository;
     }
 
-    public async Task<IEnumerable<GetTaskResponse>> Handle(GetAllTasksQuery request, CancellationToken cancellationToken)
+    public async Task<GetAllTasksResponse> Handle(GetAllTasksQuery request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

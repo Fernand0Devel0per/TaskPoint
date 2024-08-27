@@ -5,7 +5,7 @@ using TaskPoint.Domain.Model;
 using TaskPoint.Persistence.Interface;
 namespace TaskPoint.Application.Handles.Tags;
 
-public class GetAllTagsHandler : IRequestHandler<GetAllTagsQuery, IEnumerable<GetTagResponse>>
+public class GetAllTagsHandler : IRequestHandler<GetAllTagsQuery, GetAllTagsResponse>
 {
     private readonly ITagRepository<Tag> _repository;
 
@@ -14,7 +14,7 @@ public class GetAllTagsHandler : IRequestHandler<GetAllTagsQuery, IEnumerable<Ge
         _repository = repository;
     }
 
-    public async Task<IEnumerable<GetTagResponse>> Handle(GetAllTagsQuery request, CancellationToken cancellationToken)
+    public async Task<GetAllTagsResponse> Handle(GetAllTagsQuery request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

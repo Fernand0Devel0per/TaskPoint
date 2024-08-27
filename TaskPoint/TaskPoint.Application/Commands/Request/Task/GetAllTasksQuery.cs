@@ -3,6 +3,6 @@ using TaskPoint.Application.Commands.Response.Task;
 
 namespace TaskPoint.Application.Commands.Request.Task;
 
-public class GetAllTasksQuery : IRequest<IEnumerable<GetTaskResponse>>
+public class GetAllTasksQuery : IRequest<GetAllTasksResponse>
 {
 }

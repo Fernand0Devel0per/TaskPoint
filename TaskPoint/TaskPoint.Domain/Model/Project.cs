@@ -14,6 +14,8 @@ namespace TaskPoint.Domain.Model
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
 
         public User User { get; set; }
         public ICollection<Task> Tasks { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace TaskPoint.Application.Commands.Response.Tag;
 
-public class CreateTagResponse
+public class CreateTagResponse : ResponseBase
 {
     public Guid TagId { get; set; }
 

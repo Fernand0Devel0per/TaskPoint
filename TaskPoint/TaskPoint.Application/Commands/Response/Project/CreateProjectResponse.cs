@@ -1,6 +1,6 @@
 ﻿namespace TaskPoint.Application.Commands.Response.Project;
 
-public class CreateProjectResponse
+public class CreateProjectResponse : ResponseBase
 {
     public Guid ProjectId { get; set; }
 

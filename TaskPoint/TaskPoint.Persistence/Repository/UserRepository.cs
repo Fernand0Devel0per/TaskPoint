@@ -1,4 +1,5 @@
-﻿using TaskPoint.Domain.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using TaskPoint.Domain.Model;
 using TaskPoint.Persistence.Data;
 using TaskPoint.Persistence.Interface;
 
@@ -10,5 +11,10 @@ public class UserRepository : BaseRepository<User>, IUserRepository<User>
     {
     }
 
-    
+    public async Task<User> GetByEmailAsync(string email)
+    {
+        return await _context.Set<User>()
+                             .FirstOrDefaultAsync(u => u.Email == email);
+    }
+
 }
