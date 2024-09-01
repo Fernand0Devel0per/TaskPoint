@@ -4,7 +4,7 @@ using TaskPoint.Application.Commands.Response.Task;
 
 namespace TaskPoint.Application.Commands.Request.Task;
 
-public class CreateTaskCommand : IRequest<CreateTaskResponse>
+public record CreateTaskCommand : IRequest<CreateTaskResponse>
 {
     public string Title { get; set; }
     public string Description { get; set; }

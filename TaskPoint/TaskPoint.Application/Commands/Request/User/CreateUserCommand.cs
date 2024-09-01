@@ -5,7 +5,7 @@ using TaskPoint.Application.Tools.Validators;
 
 namespace TaskPoint.Application.Commands.Request.User;
 
-public class CreateUserCommand : IRequest<CreateUserResponse>
+public record CreateUserCommand : IRequest<CreateUserResponse>
 {
     [Required(ErrorMessage = "Username is required.")]
     public string Username { get; set; }

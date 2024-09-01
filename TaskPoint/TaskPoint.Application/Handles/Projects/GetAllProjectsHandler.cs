@@ -6,7 +6,7 @@ using TaskPoint.Persistence.Interface;
 
 namespace TaskPoint.Application.Handles.Projects;
 
-public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, GetAllProjectsResponse>
+public class GetAllProjectsHandler : IRequestHandler<GetManyProjectsQuery, GetManyProjectsResponse>
 {
     private readonly IProjectRepository<Project> _repository;
 
@@ -15,7 +15,7 @@ public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, GetAll
         _repository = repository;
     }
 
-    public async Task<GetAllProjectsResponse> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
+    public async Task<GetManyProjectsResponse> Handle(GetManyProjectsQuery request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

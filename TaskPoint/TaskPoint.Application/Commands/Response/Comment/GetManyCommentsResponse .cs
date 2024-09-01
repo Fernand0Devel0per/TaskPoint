@@ -1,10 +1,10 @@
 ﻿namespace TaskPoint.Application.Commands.Response.Comment;
 
-public class GetAllCommentsResponse : ResponseBase
+public record GetManyCommentsResponse : BaseResponse
 {
     public IList<GetCommentResponse> GetCommentsResponse { get; set; }
 
-    public GetAllCommentsResponse()
+    public GetManyCommentsResponse()
     {
         GetCommentsResponse = new List<GetCommentResponse>();
     }

@@ -1,6 +1,6 @@
 ﻿namespace TaskPoint.Application.Commands.Response.User;
 
-public class GetUserResponse : ResponseBase
+public record GetUserResponse : BaseResponse
 {
     public Guid UserId { get; set; }
     public string Username { get; set; }

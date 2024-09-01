@@ -4,7 +4,7 @@ using TaskStatus = TaskPoint.Domain.Tools.Enums.TaskStatus;
 
 namespace TaskPoint.Application.Commands.Request.Task;
 
-public class UpdateTaskCommand : IRequest<bool>
+public record UpdateTaskCommand : IRequest<bool>
 {
     public Guid TaskId { get; set; }
     public string Title { get; set; }

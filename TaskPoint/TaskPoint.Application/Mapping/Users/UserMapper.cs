@@ -29,7 +29,7 @@ namespace TaskPoint.Application.Mapping.Users
 
         public static CreateUserResponse ToResponse(this User entity)
         {
-            return new CreateUserResponse(entity.UserId);
+            return new CreateUserResponse() {UserId = entity.UserId };
         }
 
         public static void UpdateEntity(this UpdateUserCommand command, User entity)

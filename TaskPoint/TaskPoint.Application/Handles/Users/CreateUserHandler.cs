@@ -33,9 +33,14 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserRe
         }
         catch (Exception ex)
         {
-            var responde = new CreateUserResponse { Success = false, Message = "An internal error occurred while processing your request. Please contact support if the problem persists." };
-            responde.Errors.Add(ex.Message);
-            return responde;
+            return new CreateUserResponse
+            {
+                Success = false,
+                Message = "An internal error occurred while processing your request. Please contact support if the problem persists.",
+                Errors = {ex.Message}
+            };
+            
+             
         }
              
     }

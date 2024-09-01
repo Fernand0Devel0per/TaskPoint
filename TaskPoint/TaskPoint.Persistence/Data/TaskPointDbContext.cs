@@ -33,6 +33,12 @@ public class TaskPointDbContext : DbContext
         modelBuilder.Entity<Task>()
             .Property(t => t.Priority)
             .HasConversion<int>();
+
+        modelBuilder.Entity<Task>()
+           .HasMany(t => t.TaskTags)
+           .WithOne(tt => tt.Task)
+           .HasForeignKey(tt => tt.TaskId)
+           .OnDelete(DeleteBehavior.Cascade);
     }
 
 }

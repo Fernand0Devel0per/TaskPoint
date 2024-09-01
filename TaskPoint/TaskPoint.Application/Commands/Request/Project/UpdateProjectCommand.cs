@@ -2,7 +2,7 @@
 
 namespace TaskPoint.Application.Commands.Request.Project;
 
-public class UpdateProjectCommand : IRequest<bool>
+public record UpdateProjectCommand : IRequest<bool>
 {
     public Guid ProjectId { get; set; }
     public string Name { get; set; }

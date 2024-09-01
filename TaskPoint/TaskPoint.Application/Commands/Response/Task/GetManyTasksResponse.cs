@@ -1,9 +1,9 @@
 ﻿namespace TaskPoint.Application.Commands.Response.Task;
 
-public class GetAllTasksResponse : ResponseBase
+public record GetManyTasksResponse : BaseResponse
 {
     public IList<GetTaskResponse> GetTasksResponse { get; set; }
-    public GetAllTasksResponse()
+    public GetManyTasksResponse()
     {
         GetTasksResponse  = new List<GetTaskResponse>();
     }

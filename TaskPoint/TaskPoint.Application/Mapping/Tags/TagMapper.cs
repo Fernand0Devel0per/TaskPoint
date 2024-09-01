@@ -16,14 +16,14 @@ namespace TaskPoint.Application.Mapping.Tags
             return new Tag
             {
                 TagId = Guid.NewGuid(),
-                Name = command.Name,
-                Color = command.Color
+                Name = command.Name.ToUpper(),
+                Color = command.Color.ToUpper()
             };
         }
 
         public static CreateTagResponse ToResponse(this Tag entity)
         {
-            return new CreateTagResponse(entity.TagId);
+            return new CreateTagResponse {TagId = entity.TagId };
         }
 
         public static void UpdateEntity(this UpdateTagCommand command, Tag entity)

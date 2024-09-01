@@ -1,6 +1,6 @@
 ﻿namespace TaskPoint.Application.Commands.Response.Task;
 
-public class CreateTaskResponse : ResponseBase
+public record CreateTaskResponse : BaseResponse
 {
     public Guid TaskId { get; set; }
 
