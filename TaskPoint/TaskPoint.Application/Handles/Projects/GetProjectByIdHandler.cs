@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using TaskPoint.Application.Commands.Request.Project;
 using TaskPoint.Application.Commands.Response.Project;
+using TaskPoint.Application.Mapping.Projects;
 using TaskPoint.Domain.Model;
 using TaskPoint.Persistence.Interface;
 
@@ -17,6 +18,12 @@ public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, GetPro
 
     public async Task<GetProjectResponse> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var project = await _repository.FindByIdAsync(request.ProjectId);
+        if (project is null)
+        {
+            return new GetProjectResponse { Success = false, Message = "Project not found." };
+        }
+
+        return project.ToGetProjectResponse() with { Success = true };
     }
 }

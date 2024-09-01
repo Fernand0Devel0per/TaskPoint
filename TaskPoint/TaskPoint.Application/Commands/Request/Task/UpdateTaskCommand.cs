@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using TaskPoint.Application.Commands.Response.Task;
 using TaskPoint.Domain.Tools.Enums;
 using TaskStatus = TaskPoint.Domain.Tools.Enums.TaskStatus;
 
 namespace TaskPoint.Application.Commands.Request.Task;
 
-public record UpdateTaskCommand : IRequest<bool>
+public record UpdateTaskCommand : IRequest<UpdateTaskResponse>
 {
     public Guid TaskId { get; set; }
     public string Title { get; set; }

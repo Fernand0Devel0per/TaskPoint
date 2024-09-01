@@ -28,7 +28,7 @@ namespace TaskPoint.Application.Mapping.Projects
 
         public static CreateProjectResponse ToResponse(this Project entity)
         {
-            return new CreateProjectResponse(entity.ProjectId);
+            return new CreateProjectResponse();
         }
 
         public static void UpdateEntity(this UpdateProjectCommand command, Project entity)

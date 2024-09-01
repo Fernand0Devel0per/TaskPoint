@@ -4,8 +4,4 @@ public record CreateCommentResponse : BaseResponse
 {
     public Guid CommentId { get; set; }
 
-    public CreateCommentResponse(Guid commentId)
-    {
-        CommentId = commentId;
-    }
 }

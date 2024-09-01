@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using TaskPoint.Application.Commands.Response.Project;
 
 namespace TaskPoint.Application.Commands.Request.Project;
 
-public record UpdateProjectCommand : IRequest<bool>
+public record UpdateProjectCommand : IRequest<UpdateProjectResponse>
 {
     public Guid ProjectId { get; set; }
     public string Name { get; set; }

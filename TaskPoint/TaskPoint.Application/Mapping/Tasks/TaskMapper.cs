@@ -26,7 +26,7 @@ namespace TaskPoint.Application.Mapping.Tasks
 
         public static CreateTaskResponse ToResponse(this Task entity)
         {
-            return new CreateTaskResponse(entity.TaskId);
+            return new CreateTaskResponse {TaskId = entity.TaskId };
         }
 
         public static void UpdateEntity(this UpdateTaskCommand command, Task entity)

@@ -26,7 +26,7 @@ namespace TaskPoint.Application.Mapping.Comments
 
         public static CreateCommentResponse ToResponse(this Comment entity)
         {
-            return new CreateCommentResponse(entity.CommentId);
+            return new CreateCommentResponse {CommentId = entity.CommentId };
         }
 
         public static void UpdateEntity(this UpdateCommentCommand command, Comment entity)
