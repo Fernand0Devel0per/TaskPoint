@@ -7,7 +7,9 @@ namespace TaskPoint.Application.Commands.Request.Tag;
 
 public record UpdateTagCommand : IRequest<UpdateTagResponse>
 {
+    [Required]
     public Guid TagId { get; set; }
+
     [MaxLength(30, ErrorMessage = "The name cannot be longer than 30 characters.")]
     public string Name { get; set; }
     
