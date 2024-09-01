@@ -7,11 +7,11 @@ using TaskPoint.Persistence.Interface;
 
 namespace TaskPoint.Application.Handles.Projects;
 
-public class GetAllProjectsHandler : IRequestHandler<GetManyProjectsQuery, GetManyProjectsResponse>
+public class GetManyProjectsHandler : IRequestHandler<GetManyProjectsQuery, GetManyProjectsResponse>
 {
     private readonly IProjectRepository<Project> _repository;
 
-    public GetAllProjectsHandler(IProjectRepository<Project> repository)
+    public GetManyProjectsHandler(IProjectRepository<Project> repository)
     {
         _repository = repository;
     }

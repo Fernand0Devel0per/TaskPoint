@@ -7,11 +7,11 @@ using TaskPoint.Persistence.Interface;
 using Task = TaskPoint.Domain.Model.Task;
 namespace TaskPoint.Application.Handles.Tasks;
 
-public class GetAllTasksHandler : IRequestHandler<GetManyTasksQuery, GetManyTasksResponse>
+public class GetManyTasksHandler : IRequestHandler<GetManyTasksQuery, GetManyTasksResponse>
 {
     private readonly ITaskRepository<Task> _repository;
 
-    public GetAllTasksHandler(ITaskRepository<Task> repository)
+    public GetManyTasksHandler(ITaskRepository<Task> repository)
     {
         _repository = repository;
     }
