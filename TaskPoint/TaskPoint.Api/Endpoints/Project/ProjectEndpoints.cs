@@ -38,57 +38,100 @@ public static class ProjectEndpoints
             .Produces<GetProjectResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status500InternalServerError);
+
+        app.MapGet("/api/projects", GetManyProjects)
+            .WithName("GetManyProjects")
+            .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
+            .Produces<GetManyProjectsResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> CreateProject(IMediator mediator, [FromBody] CreateProjectCommand command)
+    private static async Task<IResult> CreateProject([FromBody] CreateProjectCommand command, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(command);
+
+        if (response.Success)
         {
-            var response = await mediator.Send(command);
             return Results.Created($"/api/projects/{response.ProjectId}", response);
         }
-        catch (Exception)
+        else if (response.Errors != null && response.Errors.Any())
+        {
+            return Results.BadRequest(response);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<IResult> UpdateProject(IMediator mediator, [FromBody] UpdateProjectCommand command)
+    private static async Task<IResult> UpdateProject([FromBody] UpdateProjectCommand command, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(command);
+
+        if (response.Success)
         {
-            var success = await mediator.Send(command);
-            return success ? Results.Ok() : Results.BadRequest();
+            return Results.Ok(response);
         }
-        catch (Exception)
+        else if (response.Errors != null && response.Errors.Any())
+        {
+            return Results.BadRequest(response);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<IResult> DeleteProject(IMediator mediator, [FromRoute] Guid projectId)
+    private static async Task<IResult> DeleteProject(Guid projectId, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(new DeleteProjectCommand { ProjectId = projectId });
+
+        if (response.Success)
         {
-            var success = await mediator.Send(new DeleteProjectCommand { ProjectId = projectId });
-            return success ? Results.Ok() : Results.BadRequest();
+            return Results.Ok(response);
         }
-        catch (Exception)
+        else if (response.Errors != null && response.Errors.Any())
+        {
+            return Results.BadRequest(response);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<IResult> GetProjectById(IMediator mediator, [FromRoute] Guid projectId)
+    private static async Task<IResult> GetProjectById(Guid projectId, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(new GetProjectByIdQuery { ProjectId = projectId });
+
+        if (response != null)
         {
-            var response = await mediator.Send(new GetProjectByIdQuery { ProjectId = projectId });
-            return response != null ? Results.Ok(response) : Results.NoContent();
+            return Results.Ok(response);
         }
-        catch (Exception)
+        else
         {
-            return Results.StatusCode(StatusCodes.Status500InternalServerError);
+            return Results.NoContent();
+        }
+    }
+
+    private static async Task<IResult> GetManyProjects([FromQuery] int pageNumber, [FromQuery] int pageSize, IMediator mediator)
+    {
+        var query = new GetManyProjectsQuery
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        var response = await mediator.Send(query);
+
+        if (response.GetProjectsResponse.Any())
+        {
+            return Results.Ok(response);
+        }
+        else
+        {
+            return Results.NoContent();
         }
     }
 }

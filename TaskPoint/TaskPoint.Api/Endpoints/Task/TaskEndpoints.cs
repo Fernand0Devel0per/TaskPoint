@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TaskPoint.Application.Commands.Request.Tags;
 using TaskPoint.Application.Commands.Request.Task;
 using TaskPoint.Application.Commands.Response.Tag;
 using TaskPoint.Application.Commands.Response.Task;
@@ -32,63 +33,134 @@ namespace TaskPoint.Api.Endpoints.Task
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" })
                 .Produces(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status500InternalServerError);
+
             app.MapGet("/api/tasks/{taskId:guid}", GetTaskById)
                 .WithName("GetTaskById")
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
                 .Produces<GetTaskResponse>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status204NoContent)
                 .Produces(StatusCodes.Status500InternalServerError);
+
+            app.MapGet("/api/tasks", GetManyTasks)
+                .WithName("GetManyTasks")
+                .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
+                .Produces<GetManyTasksResponse>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status204NoContent)
+                .Produces(StatusCodes.Status500InternalServerError);
+
+            app.MapGet("/api/tags", GetManyTags)
+                .WithName("GetManyTags")
+                .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
+                .Produces<GetManyTagsResponse>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status204NoContent)
+                .Produces(StatusCodes.Status500InternalServerError);
         }
 
-        private static async Task<IResult> CreateTask(IMediator mediator, [FromBody] CreateTaskCommand command)
+        private static async Task<IResult> CreateTask([FromBody] CreateTaskCommand command, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(command);
+
+            if (response.Success)
             {
-                var response = await mediator.Send(command);
                 return Results.Created($"/api/tasks/{response.TaskId}", response);
             }
-            catch (Exception)
+            else if (!response.Success)
+            {
+                return Results.BadRequest(response.Message);
+            }
+            else
             {
                 return Results.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        private static async Task<IResult> UpdateTask(IMediator mediator, [FromBody] UpdateTaskCommand command)
+        private static async Task<IResult> UpdateTask([FromBody] UpdateTaskCommand command, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(command);
+
+            if (response.Success)
             {
-                var success = await mediator.Send(command);
-                return success ? Results.Ok() : Results.BadRequest();
+                return Results.Ok(response);
             }
-            catch (Exception)
+            else if (!response.Success)
+            {
+                return Results.BadRequest(response.Message);
+            }
+            else
             {
                 return Results.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        private static async Task<IResult> DeleteTask(IMediator mediator, [FromRoute] Guid taskId)
+        private static async Task<IResult> DeleteTask(Guid taskId, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(new DeleteTaskCommand { TaskId = taskId });
+
+            if (response.Success)
             {
-                var success = await mediator.Send(new DeleteTaskCommand { TaskId = taskId });
-                return success ? Results.Ok() : Results.BadRequest();
+                return Results.Ok(response);
             }
-            catch (Exception)
+            else if (!response.Success)
+            {
+                return Results.BadRequest(response.Message);
+            }
+            else
             {
                 return Results.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        private static async Task<IResult> GetTaskById(IMediator mediator, [FromRoute] Guid taskId)
+        private static async Task<IResult> GetTaskById(Guid taskId, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(new GetTaskByIdQuery { TaskId = taskId });
+
+            if (response != null)
             {
-                var response = await mediator.Send(new GetTaskByIdQuery { TaskId = taskId });
-                return response != null ? Results.Ok(response) : Results.NoContent();
+                return Results.Ok(response);
             }
-            catch (Exception)
+            else
             {
-                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+                return Results.NoContent();
+            }
+        }
+
+        private static async Task<IResult> GetManyTasks([FromQuery] int pageNumber, [FromQuery] int pageSize, IMediator mediator)
+        {
+            var query = new GetManyTasksQuery
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var response = await mediator.Send(query);
+
+            if (response.GetTasksResponse.Any())
+            {
+                return Results.Ok(response);
+            }
+            else
+            {
+                return Results.NoContent();
+            }
+        }
+
+        private static async Task<IResult> GetManyTags([FromQuery] int pageNumber, [FromQuery] int pageSize, IMediator mediator)
+        {
+            var query = new GetManyTagsQuery
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var response = await mediator.Send(query);
+
+            if (response.GetTasksResponse.Any())
+            {
+                return Results.Ok(response);
+            }
+            else
+            {
+                return Results.NoContent();
             }
         }
     }

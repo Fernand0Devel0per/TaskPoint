@@ -40,42 +40,57 @@ public static class TagEndpoints
             .Produces(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> CreateTag(IMediator mediator, [FromBody] CreateTagCommand command)
+    private static async Task<IResult> CreateTag([FromBody] CreateTagCommand command, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(command);
+
+        if (response.Success)
         {
-            var response = await mediator.Send(command);
             return Results.Created($"/api/tags/{response.TagId}", response);
         }
-        catch (Exception)
+        else if (!response.Success)
+        {
+            return Results.BadRequest(response.Message);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<IResult> UpdateTag(IMediator mediator, [FromBody] UpdateTagCommand command)
+    private static async Task<IResult> UpdateTag([FromBody] UpdateTagCommand command, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(command);
+
+        if (response.Success)
         {
-            var success = await mediator.Send(command);
-            return success ? Results.Ok() : Results.BadRequest();
+            return Results.Ok(response);
         }
-        catch (Exception)
+        else if (!response.Success)
+        {
+            return Results.BadRequest(response.Message);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<IResult> DeleteTag(IMediator mediator, [FromRoute] Guid tagId)
+    private static async Task<IResult> DeleteTag(Guid tagId, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(new DeleteTagCommand { TagId = tagId });
+
+        if (response.Success)
         {
-            var success = await mediator.Send(new DeleteTagCommand { TagId = tagId });
-            return success ? Results.Ok() : Results.BadRequest();
+            return Results.Ok(response);
         }
-        catch (Exception)
+        else if (!response.Success)
         {
-            return Results.StatusCode(StatusCodes.Status500InternalServerError);
+            return Results.BadRequest(response.Message);
+        }
+        else
+        {
+            return Results.StatusCode(StatusCodes.Status500InternalServerError, response);
         }
     }
 

@@ -40,55 +40,71 @@ namespace TaskPoint.Api.Endpoints.User
                 .Produces(StatusCodes.Status500InternalServerError);
         }
 
-        private static async Task<IResult> CreateUser(IMediator mediator, [FromBody] CreateUserCommand command)
+        private static async Task<IResult> CreateUser([FromBody] CreateUserCommand command, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(command);
+
+            if (response.Success)
             {
-                var response = await mediator.Send(command);
                 return Results.Created($"/api/users/{response.UserId}", response);
             }
-            catch (Exception)
+            else if (!response.Success)
+            {
+                return Results.BadRequest(response.Message);
+            }
+            else
             {
                 return Results.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        private static async Task<IResult> UpdateUser(IMediator mediator, [FromBody] UpdateUserCommand command)
+        private static async Task<IResult> UpdateUser([FromBody] UpdateUserCommand command, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(command);
+
+            if (response.Success)
             {
-                var success = await mediator.Send(command);
-                return success ? Results.Ok() : Results.BadRequest();
+                return Results.Ok(response);
             }
-            catch (Exception)
+            else if (!response.Success)
+            {
+                return Results.BadRequest(response.Message);
+            }
+            else
             {
                 return Results.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        private static async Task<IResult> DeleteUser(IMediator mediator, [FromRoute] Guid userId)
+        private static async Task<IResult> DeleteUser(Guid userId, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(new DeleteUserCommand { UserId = userId });
+
+            if (response.Success)
             {
-                var success = await mediator.Send(new DeleteUserCommand { UserId = userId });
-                return success ? Results.Ok() : Results.BadRequest();
+                return Results.Ok(response);
             }
-            catch (Exception)
+            else if (!response.Success)
+            {
+                return Results.BadRequest(response.Message);
+            }
+            else
             {
                 return Results.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        private static async Task<IResult> GetUserById(IMediator mediator, [FromRoute] Guid userId)
+        private static async Task<IResult> GetUserById(Guid userId, IMediator mediator)
         {
-            try
+            var response = await mediator.Send(new GetUserByIdQuery { UserId = userId });
+
+            if (response != null)
             {
-                var response = await mediator.Send(new GetUserByIdQuery { UserId = userId });
-                return response != null ? Results.Ok(response) : Results.NoContent();
+                return Results.Ok(response);
             }
-            catch (Exception)
+            else
             {
-                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+                return Results.NoContent();
             }
         }
     }

@@ -38,42 +38,64 @@ public static class CommentEndpoints
             .Produces<GetCommentResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status500InternalServerError);
+
+        app.MapGet("/api/comments", GetManyComments)
+            .WithName("GetManyComments")
+            .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,UserDefault" })
+            .Produces<GetManyCommentsResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> CreateComment(IMediator mediator, [FromBody] CreateCommentCommand command)
+    private static async Task<IResult> CreateComment([FromBody] CreateCommentCommand command, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(command);
+
+        if (response.Success)
         {
-            var response = await mediator.Send(command);
             return Results.Created($"/api/comments/{response.CommentId}", response);
         }
-        catch (Exception)
+        else if (response.Errors != null && response.Errors.Any())
+        {
+            return Results.BadRequest(response);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<IResult> UpdateComment(IMediator mediator, [FromBody] UpdateCommentCommand command)
+    private static async Task<IResult> DeleteComment(Guid commentId, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(new DeleteCommentCommand { CommentId = commentId });
+
+        if (response.Success)
         {
-            var success = await mediator.Send(command);
-            return success ? Results.Ok() : Results.BadRequest();
+            return Results.Ok(response);
         }
-        catch (Exception)
+        else if (response.Errors != null && response.Errors.Any())
+        {
+            return Results.BadRequest(response);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<IResult> DeleteComment(IMediator mediator, [FromRoute] Guid commentId)
+    private static async Task<IResult> UpdateComment([FromBody] UpdateCommentCommand command, IMediator mediator)
     {
-        try
+        var response = await mediator.Send(command);
+
+        if (response.Success)
         {
-            var success = await mediator.Send(new DeleteCommentCommand { CommentId = commentId });
-            return success ? Results.Ok() : Results.BadRequest();
+            return Results.Ok(response);
         }
-        catch (Exception)
+        else if (response.Errors != null && response.Errors.Any())
+        {
+            return Results.BadRequest(response);
+        }
+        else
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
         }
@@ -89,6 +111,26 @@ public static class CommentEndpoints
         catch (Exception)
         {
             return Results.StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    private static async Task<IResult> GetManyComments([FromQuery] int pageNumber, [FromQuery] int pageSize, IMediator mediator)
+    {
+        var query = new GetManyCommentsQuery
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        var response = await mediator.Send(query);
+
+        if (response.GetCommentsResponse.Any())
+        {
+            return Results.Ok(response);
+        }
+        else
+        {
+            return Results.NoContent();
         }
     }
 }
