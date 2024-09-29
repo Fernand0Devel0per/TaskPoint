@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaskPoint.Application\TaskPoint.Application.csproj" />
+    <ProjectReference Include="..\TaskPoint.Infra\TaskPoint.Infra.csproj" />
   </ItemGroup>
 
 </Project>

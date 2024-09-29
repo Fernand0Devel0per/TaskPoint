@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskPoint.Domain.Tools.Enums
+namespace TaskPoint.Infra.Security
 {
-    public enum UserRole
+    public class JwtSettings
     {
-        Admin,
-        User,
-        PremiumUser
+        public string Secret { get; set; }
     }
 }

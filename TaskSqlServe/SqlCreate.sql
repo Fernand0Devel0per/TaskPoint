@@ -77,4 +77,4 @@ CREATE TABLE UserRoles (
 -- Insert enumeration values
 INSERT INTO TaskStatus (StatusId, Name) VALUES (0, 'Pending'), (1, 'InProgress'), (2, 'Completed');
 INSERT INTO TaskPriority (PriorityId, Name) VALUES (0, 'Low'), (1, 'Medium'), (2, 'High');
-INSERT INTO UserRoles (RoleId, Name) VALUES (0, 'Admin'), (1, 'UserDefault'), (2, 'Guest');
+INSERT INTO UserRoles (RoleId, Name) VALUES (0, 'Admin'), (1, 'User'), (2, 'PremiumUser');
